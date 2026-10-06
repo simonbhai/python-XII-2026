@@ -1,0 +1,124 @@
+CLASS 12 SQL PRACTICAL – 1
+STUDENT DETAILS AND SPORTS
+25 QUESTIONS AND ANSWERS (MySQL)
+
+Q1. Create the database Student_Details.
+CREATE DATABASE Student_Details;
+
+Q2. Select the database.
+USE Student_Details;
+
+Q3. Create the Student table.
+CREATE TABLE Student (
+    ADMNO VARCHAR(10) PRIMARY KEY,
+    NAME VARCHAR(20) NOT NULL,
+    STREAM VARCHAR(15),
+    DOB DATE,
+    GENDER CHAR(1),
+    OPTION1 VARCHAR(5),
+    MARKS INT
+);
+
+Q4. Insert records into Student.
+INSERT INTO Student (ADMNO, NAME, STREAM, DOB, GENDER, OPTION1, MARKS) VALUES
+('P036', 'Amith', 'Science', '2005-01-06', 'M', 'CS', 418),
+('P195', 'Mithin', 'Commerce', '2004-06-24', 'M', 'IP', 485),
+('P290', 'Rakshit', 'Humanities', '2005-06-12', 'M', 'IP', 478),
+('P032', 'Rashmi', 'Science', '2005-08-02', 'F', 'CS', 410),
+('P468', 'Sulekha', 'Science', '2005-08-20', 'F', 'CS', 422),
+('P572', 'Devika', 'Commerce', '2004-09-12', 'F', 'IP', 476),
+('P069', 'Saurav', 'Humanities', '2005-03-29', 'M', 'IP', 439),
+('P043', 'Manveen', 'Humanities', '2004-08-16', 'M', 'IP', 440);
+
+Q5. Display the structure of Student.
+DESC Student;
+
+Q6. Increase Commerce students' marks by 2%.
+UPDATE Student SET MARKS = MARKS * 1.02 WHERE STREAM = 'Commerce';
+
+Q7. Show details of Commerce and Humanities students.
+SELECT * FROM Student WHERE STREAM IN ('Commerce', 'Humanities');
+
+Q8. Display Rakshit's details.
+SELECT * FROM Student WHERE NAME = 'Rakshit';
+
+Q9. Display female Commerce students.
+SELECT * FROM Student WHERE GENDER = 'F' AND STREAM = 'Commerce';
+
+Q10. Display ADMNO, NAME and MARKS of male students.
+SELECT ADMNO, NAME, MARKS FROM Student WHERE GENDER = 'M';
+
+Q11. Display ADMNO, NAME, STREAM and the overall average marks with heading Average Marks.
+SELECT ADMNO, NAME, STREAM,
+       (SELECT AVG(MARKS) FROM Student) AS `Average Marks`
+FROM Student;
+
+Q12. Display students with marks from 415 to 418.
+SELECT * FROM Student WHERE MARKS BETWEEN 415 AND 418;
+
+Q13. Display names that start with A and end with A.
+SELECT NAME FROM Student WHERE NAME LIKE 'A%A';
+
+Q14. Add EMAIL with a default address and display all records.
+ALTER TABLE Student ADD EMAIL VARCHAR(50) DEFAULT 'student@gmail.com';
+SELECT * FROM Student;
+
+Q15. Display streams without repetition.
+SELECT DISTINCT STREAM FROM Student;
+
+Q16. Display names in descending order of marks.
+SELECT NAME FROM Student ORDER BY MARKS DESC;
+
+Q17. Display students born before 1 December 2004.
+SELECT * FROM Student WHERE DOB < '2004-12-01';
+
+Q18. Delete the record of a student who scored 475.
+DELETE FROM Student WHERE MARKS = 475;
+
+Q19. Count the students.
+SELECT COUNT(*) AS Total_Students FROM Student;
+
+Q20. Count the records/games in Sports.
+SELECT COUNT(*) AS Total_Games FROM Sports;
+
+Q21. Show minimum marks in Science.
+SELECT MIN(MARKS) AS Minimum_Marks FROM Student WHERE STREAM = 'Science';
+
+Q22. Show maximum marks of male students.
+SELECT MAX(MARKS) AS Maximum_Marks FROM Student WHERE GENDER = 'M';
+
+Q23. Find the sum of marks greater than 470.
+SELECT SUM(MARKS) AS Total_Marks FROM Student WHERE MARKS > 470;
+
+Q24. Display names and games of students whose optional subject is IP.
+SELECT Student.NAME, Sports.GAME
+FROM Student JOIN Sports ON Student.ADMNO = Sports.ADMNO
+WHERE Student.OPTION1 = 'IP';
+
+Q25. Display Science students' names and coach names.
+SELECT Student.NAME, Sports.COACHNAME
+FROM Student JOIN Sports ON Student.ADMNO = Sports.ADMNO
+WHERE Student.STREAM = 'Science';
+
+
+SPORTS TABLE (if not already created)
+CREATE TABLE Sports (
+    ADMNO VARCHAR(10) PRIMARY KEY,
+    GAME VARCHAR(20),
+    COACHNAME VARCHAR(30),
+    GRADE CHAR(1)
+);
+
+INSERT INTO Sports VALUES
+('P290', 'Cricket', 'MR.RAVI', 'A'),
+('P036', 'Volleyball', 'MR.AMANDEEP', 'B'),
+('P189', 'Volleyball', 'MR.GOVARDHAN', 'A'),
+('P069', 'Basketball', 'MR.TEWARI', 'A'),
+('P468', 'Basketball', 'MR.ARJUN KUMAR', 'B'),
+('P572', 'Tennis', 'MR.RANJITH PAL', 'A');
+
+NOTES:
+- Run Q1 and Q2 first, then create and populate the tables.
+- Q11 uses a subquery to avoid MySQL ONLY_FULL_GROUP_BY errors.
+- Check the values and spelling against your notebook; these were transcribed from the earlier chat.
+- UPDATE, ALTER and DELETE queries change the table. Avoid running them repeatedly unless intended.
