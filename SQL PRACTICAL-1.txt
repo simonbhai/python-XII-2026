@@ -77,6 +77,26 @@ DELETE FROM Student WHERE MARKS = 475;
 
 Q19. Count the students.
 SELECT COUNT(*) AS Total_Students FROM Student;
+_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_**_
+for the 20th question we want to create a table sports and insert values
+
+###for making table .......!!!
+CREATE TABLE Sports (
+    ADMNO VARCHAR(10) PRIMARY KEY,
+    GAME VARCHAR(20),
+    COACHNAME VARCHAR(30),
+    GRADE CHAR(1)
+);
+
+### for inserting values ......!!!
+INSERT INTO Sports VALUES
+('P290', 'Cricket', 'MR.RAVI', 'A'),
+('P036', 'Volleyball', 'MR.AMANDEEP', 'B'),
+('P189', 'Volleyball', 'MR.GOVARDHAN', 'A'),
+('P069', 'Basketball', 'MR.TEWARI', 'A'),
+('P468', 'Basketball', 'MR.ARJUN KUMAR', 'B'),
+('P572', 'Tennis', 'MR.RANJITH PAL', 'A');
+*_*_*_*_*_*_*_*_*_*_*_**_*_*_*_*_*_*_*_*_*_*_*_*_*__*_*_*_*_*_*_
 
 Q20. Count the records/games in Sports.
 SELECT COUNT(*) AS Total_Games FROM Sports;
