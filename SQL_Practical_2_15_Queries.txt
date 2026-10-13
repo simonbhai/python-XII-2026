@@ -1,49 +1,4 @@
-SQL PRACTICAL 2 — EMPLOYEE DATABASE
-===================================
 
-Assumptions based on the notebook photos:
-- Database: employee
-- Table 1: INFO(EMPID, NAME, GENDER, AGE, DESIGNATION, DOJ, SALARY, CITY)
-- Table 2: DEPT(DEPTID, DEPTNAME, FLOORNO, EMPID)
-- The questions that are hard to read are interpreted as stated below. Check Q4, Q9, and Q11 against your notebook.
-
-PART A — EXTRA COMMANDS REQUIRED TO CREATE AND FILL THE TABLES
---------------------------------------------------------------
-
-1. Create and select the database
-Usage: Creates the database and makes it the active database.
-
-CREATE DATABASE employee;
-USE employee;
-
-2. Create the INFO table
-Usage: Creates the employee table with all eight columns, including CITY.
-
-CREATE TABLE INFO (
-    EMPID VARCHAR(10) PRIMARY KEY,
-    NAME VARCHAR(30),
-    GENDER CHAR(1),
-    AGE INT,
-    DESIGNATION VARCHAR(30),
-    DOJ DATE,
-    SALARY INT,
-    CITY VARCHAR(30)
-);
-
-3. Insert the seven employee records
-Usage: Adds the records shown in the notebook. Dates use YYYY-MM-DD format.
-
-INSERT INTO INFO VALUES
-('E112', 'Praveen', 'M', 25, 'Sales', '1989-06-08', 20000, 'Chennai'),
-('E142', 'Arun',    'M', 29, 'Marketing', '1989-09-06', 32000, 'Chennai'),
-('E153', 'Asha',    'F', 27, 'Finance', '1994-08-09', 35000, 'BGM'),
-('E114', 'Bala',    'M', 31, 'Sales', '1990-03-23', 27000, 'Null'),
-('E145', 'Yamini',  'F', 28, 'Marketing', '1990-04-23', 31000, 'Mumbai'),
-('E156', 'Nisha',   'F', 26, 'Sales', '1991-02-24', 18000, 'Bengaluru'),
-('E117', 'Manoj',   'M', 32, 'Finance', '1982-03-06', 30000, 'Goa');
-
-Note: The city entry written as “null” in the notebook is entered above as the text 'Null'.
-If it is intended to be an SQL NULL value, replace 'Null' with NULL (without quotes).
 
 4. Create the DEPT table
 Usage: Creates the department table. EMPID connects the department record to an employee.
@@ -64,172 +19,291 @@ INSERT INTO DEPT VALUES
 (30, 'Production', 1, 'E153'),
 (40, 'Sales', 5, 'E114');
 
-Useful check commands:
-DESC INFO;
-SELECT * FROM INFO;
-DESC DEPT;
-SELECT * FROM DEPT;
+# SQL Employee Table – Questions and Answers
 
+## 1. Create the Employee Table
 
-PART B — THE 15 QUESTIONS AND ANSWERS
--------------------------------------
+```sql
+CREATE TABLE Employee (
+    EMP_ID INT,
+    Name VARCHAR(30),
+    Gender VARCHAR(10),
+    Age INT,
+    Designation VARCHAR(30),
+    DOJ DATE,
+    Salary DECIMAL(10,2),
+    City VARCHAR(30)
+);
+```
 
-1. Question: Write a query to list the names of employees in descending order.
+## 2. Insert Employee Records
 
-Query:
-SELECT NAME
-FROM INFO
-ORDER BY NAME DESC;
+Note: The employee IDs, genders, ages, and designations below should be verified against the original question paper. The City and Salary values follow the order provided.
 
-Usage: Lists employee names from Z to A.
+```sql
+INSERT INTO Employee
+(EMP_ID, Name, Gender, Age, Designation, DOJ, Salary, City)
+VALUES
+(1, 'Preeti', NULL, NULL, NULL, '1989-06-08', 20000, 'Chennai'),
+(2, 'Arum', NULL, NULL, NULL, '1989-09-02', 32000, 'Chennai'),
+(3, 'Usha', NULL, NULL, NULL, '1994-08-09', 35000, 'Bangalore'),
+(4, 'Bala', NULL, NULL, NULL, '1990-03-23', 27000, NULL),
+(5, 'Rani', NULL, NULL, NULL, '1990-04-23', 31000, 'Mumbai'),
+(6, 'Nisha', NULL, NULL, NULL, '1991-02-24', 18000, 'Bangalore'),
+(7, 'Manoj', NULL, NULL, NULL, '1982-03-06', 30000, 'Goa');
+```
 
+Note: Nisha's Designation is NULL, as specified. The sample INSERT statement uses NULL for other unknown fields. Replace those values with the actual data from your question paper.
 
-2. Question: Write a query to display the maximum salary and minimum salary of employees.
+## 3. Fifteen SQL Questions and Answers
 
-Query:
-SELECT MAX(SALARY) AS Maximum_Salary,
-       MIN(SALARY) AS Minimum_Salary
-FROM INFO;
+### Question 1: Display all employee records.
 
-Usage: MAX() returns the highest salary and MIN() returns the lowest salary.
+```sql
+SELECT * FROM Employee;
+```
 
+### Question 2: Display employee names and salaries.
 
-3. Question: Write a query to count the number of employees earning more than 25000.
+```sql
+SELECT Name, Salary
+FROM Employee;
+```
 
-Query:
-SELECT COUNT(*) AS Employee_Count
-FROM INFO
-WHERE SALARY > 25000;
+### Question 3: Display employees whose salary is greater than 30000.
 
-Usage: Counts only employees whose salary is greater than 25000.
-
-
-4. Question: Write a query to display designations where the number of employees is greater than or equal to 2.
-
-Query:
-SELECT DESIGNATION, COUNT(*) AS Employee_Count
-FROM INFO
-GROUP BY DESIGNATION
-HAVING COUNT(*) >= 2;
-
-Usage: GROUP BY groups employees by designation; HAVING filters groups by their employee count.
-
-
-5. Question: Write a query to display the sum of salary of employees, grouped designation-wise.
-
-Query:
-SELECT DESIGNATION, SUM(SALARY) AS Total_Salary
-FROM INFO
-GROUP BY DESIGNATION;
-
-Usage: Adds the salaries of employees within each designation.
-
-
-6. Question: Display the names of various cities from INFO, with each city appearing only once.
-
-Query:
-SELECT DISTINCT CITY
-FROM INFO;
-
-Usage: DISTINCT removes duplicate city names.
-
-
-7. Question: Display the details of all employees whose salary is between 25000 and 33000.
-
-Query:
+```sql
 SELECT *
-FROM INFO
-WHERE SALARY BETWEEN 25000 AND 33000;
+FROM Employee
+WHERE Salary > 30000;
+```
 
-Usage: BETWEEN includes both boundary values, 25000 and 33000.
+### Question 4: Display employees whose salary is less than 25000.
 
+```sql
+SELECT *
+FROM Employee
+WHERE Salary < 25000;
+```
 
-8. Question: Display the name and salary of employees whose salary is above 30000 and whose gender is not male.
+### Question 5: Display employees in ascending order of salary.
 
-Query:
-SELECT NAME, SALARY
-FROM INFO
-WHERE SALARY > 30000
-  AND GENDER <> 'M';
+```sql
+SELECT *
+FROM Employee
+ORDER BY Salary ASC;
+```
 
-Usage: Displays name and salary for employees earning above 30000 who are not marked M.
+### Question 6: Display employees in descending order of salary.
 
+```sql
+SELECT *
+FROM Employee
+ORDER BY Salary DESC;
+```
 
-9. Question: Write a query to find the average salary of all employees. [The handwriting appears to ask for the average salary.]
+### Question 7: Find the highest salary.
 
-Query:
-SELECT AVG(SALARY) AS Average_Salary
-FROM INFO;
+```sql
+SELECT MAX(Salary) AS Highest_Salary
+FROM Employee;
+```
 
-Usage: AVG() calculates the average of all salary values.
+### Question 8: Find the lowest salary.
 
+```sql
+SELECT MIN(Salary) AS Lowest_Salary
+FROM Employee;
+```
 
-10. Question: Display the maximum salary of employees in each designation.
+### Question 9: Calculate the total salary of all employees.
 
-Query:
-SELECT DESIGNATION, MAX(SALARY) AS Maximum_Salary
-FROM INFO
-GROUP BY DESIGNATION;
+```sql
+SELECT SUM(Salary) AS Total_Salary
+FROM Employee;
+```
 
-Usage: Shows the highest salary within each designation.
+### Question 10: Calculate the average salary.
 
+```sql
+SELECT AVG(Salary) AS Average_Salary
+FROM Employee;
+```
 
-11. Question: Display the name and respective department name of each employee whose salary is more than 30000. [The salary limit is unclear in the photo; 30000 is assumed.]
+### Question 11: Count the total number of employees.
 
-Query:
-SELECT INFO.NAME, DEPT.DEPTNAME
-FROM INFO
-INNER JOIN DEPT ON INFO.EMPID = DEPT.EMPID
-WHERE INFO.SALARY > 30000;
+```sql
+SELECT COUNT(*) AS Total_Employees
+FROM Employee;
+```
 
-Usage: JOIN matches employee and department rows using EMPID, then filters by salary.
+### Question 12: Display employees whose names start with P.
 
+```sql
+SELECT *
+FROM Employee
+WHERE Name LIKE 'P%';
+```
 
-12. Question: Display name and designation from INFO, and department name and floor number from DEPT.
+### Question 13: Display employees who joined after 1 January 1990.
 
-Query:
-SELECT INFO.NAME, INFO.DESIGNATION, DEPT.DEPTNAME, DEPT.FLOORNO
-FROM INFO
-INNER JOIN DEPT ON INFO.EMPID = DEPT.EMPID;
+```sql
+SELECT *
+FROM Employee
+WHERE DOJ > '1990-01-01';
+```
 
-Usage: Joins the two tables and displays the requested columns.
+### Question 14: Display employees whose designation is NULL.
 
+```sql
+SELECT *
+FROM Employee
+WHERE Designation IS NULL;
+```
 
-13. Question: Display department name and sum of salary, grouped designation-wise, from INFO and DEPT, in ascending order of salary sum.
+### Question 15: Find the second-highest distinct salary.
 
-Query:
-SELECT DEPT.DEPTNAME, SUM(INFO.SALARY) AS Total_Salary
-FROM INFO
-INNER JOIN DEPT ON INFO.EMPID = DEPT.EMPID
-GROUP BY DEPT.DEPTNAME
-ORDER BY Total_Salary ASC;
+```sql
+SELECT MAX(Salary) AS Second_Highest_Salary
+FROM Employee
+WHERE Salary < (
+    SELECT MAX(Salary)
+    FROM Employee
+);
+```
 
-Usage: Joins the tables, totals salaries for each department name, and sorts totals from low to high.
-Note: The notebook wording seems to mix “group by designation” with “department name”. This query groups by department name because that is the displayed output requested.
+## 4. Additional SQL Queries
 
+### A. Add an Email column.
 
-14. Question: Display the number of employees in table INFO.
+```sql
+ALTER TABLE Employee
+ADD Email VARCHAR(100);
+```
 
-Query:
-SELECT COUNT(*) AS Number_of_Employees
-FROM INFO;
+### B. Update Preeti's city to Kochi.
 
-Usage: Counts all rows in INFO.
+```sql
+UPDATE Employee
+SET City = 'Kochi'
+WHERE Name = 'Preeti';
+```
 
+### C. Update Nisha's designation.
 
-15. Question: Display the maximum salary of male employees from INFO.
+```sql
+UPDATE Employee
+SET Designation = 'Clerk'
+WHERE Name = 'Nisha';
+```
 
-Query:
-SELECT MAX(SALARY) AS Maximum_Male_Salary
-FROM INFO
-WHERE GENDER = 'M';
+Note: Run this query only if the intended designation is Clerk. Otherwise, replace Clerk with the correct designation.
 
-Usage: Filters for male employees first, then returns their highest salary.
+### D. Find employees with salaries between 20000 and 30000, inclusive.
 
+```sql
+SELECT *
+FROM Employee
+WHERE Salary BETWEEN 20000 AND 30000;
+```
 
-IMPORTANT NOTES
----------------
-- Run the database/table creation and INSERT commands in Part A before running the 15 queries.
-- Run each query separately.
-- If your teacher’s exact wording for Q4, Q9, Q11, or Q13 differs, use the wording in your notebook; those parts were difficult to read from the photos.
-- The notebook lists seven salary values: 20000, 32000, 35000, 27000, 31000, 18000, and 30000. These are used above.
+### E. Display unique cities, including NULL if present.
+
+```sql
+SELECT DISTINCT City
+FROM Employee;
+```
+
+### F. Find employees whose names contain the letter a.
+
+```sql
+SELECT *
+FROM Employee
+WHERE Name LIKE '%a%';
+```
+
+### G. Increase every employee's salary by 10%.
+
+```sql
+UPDATE Employee
+SET Salary = Salary * 1.10;
+```
+
+### H. Delete the employee whose ID is 7.
+
+```sql
+DELETE FROM Employee
+WHERE EMP_ID = 7;
+```
+
+Warning: UPDATE and DELETE statements modify table data. Run them only when you intend to make those changes.
+
+## 5. Useful Aggregate Queries
+
+### Count employees in each city.
+
+```sql
+SELECT City, COUNT(*) AS Employee_Count
+FROM Employee
+GROUP BY City;
+```
+
+### Calculate the average salary in each city.
+
+```sql
+SELECT City, AVG(Salary) AS Average_Salary
+FROM Employee
+GROUP BY City;
+```
+
+### Display employees earning more than the average salary.
+
+```sql
+SELECT *
+FROM Employee
+WHERE Salary > (
+    SELECT AVG(Salary)
+    FROM Employee
+);
+```
+
+### Find employees with a missing city.
+
+```sql
+SELECT *
+FROM Employee
+WHERE City IS NULL;
+```
+
+### Find employees with a missing designation.
+
+```sql
+SELECT *
+FROM Employee
+WHERE Designation IS NULL;
+```
+
+## 6. Expected Results for Salary Queries
+
+Based on the seven salary values provided:
+
+- Highest salary: 35000
+- Lowest salary: 18000
+- Total salary: 193000
+- Average salary: 27571.43
+- Employee count: 7
+- Second-highest distinct salary: 32000
+
+## 7. Important Notes
+
+1. SQL uses `IS NULL` and `IS NOT NULL` to test missing values.
+2. Use `ORDER BY Salary ASC` for ascending order and `ORDER BY Salary DESC` for descending order.
+3. Use `COUNT(*)` to count all records.
+4. Use `MAX()`, `MIN()`, `SUM()`, and `AVG()` for aggregate calculations.
+5. The sample questions above are not confirmed to be the exact 15 questions in the original assignment.
+6. The complete second table and the original 15 questions are still needed to prepare exact assignment answers.
+7. Verify the employee IDs and the missing employee attributes against the original question paper before submitting.
+
+## Conclusion
+
+This README provides SQL table creation, sample employee data, 15 example questions with answers, and additional queries for filtering, sorting, aggregation, grouping, updating, and deleting records.
