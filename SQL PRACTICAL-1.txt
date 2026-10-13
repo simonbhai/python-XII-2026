@@ -57,7 +57,7 @@ Q12. Display students with marks from 415 to 418.
 SELECT * FROM Student WHERE MARKS BETWEEN 415 AND 418;
 
 Q13. Display names that start with A and end with A.
-SELECT NAME FROM Student WHERE NAME LIKE 'A%A';
+SELECT NAME FROM Student WHERE NAME LIKE k% or name like "%A";
 
 Q14. Add EMAIL with a default address and display all records.
 ALTER TABLE Student ADD EMAIL VARCHAR(50) DEFAULT 'student@gmail.com';
