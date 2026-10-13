@@ -120,6 +120,20 @@ SELECT Student.NAME, Sports.COACHNAME
 FROM Student JOIN Sports ON Student.ADMNO = Sports.ADMNO
 WHERE Student.STREAM = 'Science';
 
+26. Display the average marks of students with their grades in group-wise as per grade in table Student.
+SELECT AVG(MARKS), GRADE FROM STUDENT, SPORTS WHERE STUDENT.ADMNO+SPORTS.ADMNO GROUP BY SPORTS.GRADE;
+
+27. No. of students who play volleyball
+SELECT COUNT(name)
+FROM student, sports
+WHERE student.admno = sports.admno
+GROUP BY game
+HAVING game = 'Volleyball';
+
+28. Display the name of student, item participating and their corresponding coach name
+SELECT name, game, coachname FROM
+student, sports WHERE student.admno
+= sports.admno;
 
 SPORTS TABLE (if not already created)
 CREATE TABLE Sports (
