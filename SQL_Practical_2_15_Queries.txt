@@ -113,31 +113,35 @@ GROUP BY Designation;
 Question 11: Write a query to display the name and respective department name of each employee whose salary is more than 30,000.
 Assuming Employee.EMP_ID matches Department.EMP_ID, use:
 
-SELECT E.Name, D.Dept_Name
+SELECT E.Name, D.DEPTNAME
 FROM Employee E
-JOIN Department D
-    ON E.EMP_ID = D.EMP_ID
+JOIN DEPT D
+    ON E.EMP_ID = D.EMPID
 WHERE E.Salary > 30000;
 
 Question 12: Write a query to display the employee name and designation from the Info table and department name and floor number from the Deptu table.
-SELECT I.Name, I.Designation, D.Dept_Name, D.Floor_Number
-FROM Info I
-JOIN Deptu D
-    ON I.EMP_ID = D.EMP_ID;
+SELECT E.Name, E.Designation, D.DEPTNAME, D.FLOORNO
+FROM Employee E
+JOIN DEPT D
+    ON E.EMP_ID = D.EMPID;
 
 Question 13: Write a query to display the department name and sum of salaries, grouped by designation, from the Info and Deptu tables, in ascending order of the sum of salary.
-SELECT D.Dept_Name, I.Designation, SUM(I.Salary) AS Total_Salary
-FROM Info I
-JOIN Deptu D
-    ON I.EMP_ID = D.EMP_ID
-GROUP BY D.Dept_Name, I.Designation
+
+SELECT D.DEPTNAME, E.Designation,
+       SUM(E.Salary) AS Total_Salary
+FROM Employee E
+JOIN DEPT D
+    ON E.EMP_ID = D.EMPID
+GROUP BY D.DEPTNAME, E.Designation
 ORDER BY Total_Salary ASC;
 
 Question 14: Write a query to display the number of employees in the Info table.
+
 SELECT COUNT(*) AS Total_Employees
-FROM Info;
+FROM Employee;
 
 Question 15: Write a query to display the maximum salary of male employees from the Info table.
+
 SELECT MAX(Salary) AS Maximum_Salary
-FROM Info
+FROM Employee
 WHERE Gender = 'Male';
